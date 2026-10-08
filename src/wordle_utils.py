@@ -12,7 +12,11 @@ def es_palabra_valida(cadena: str) -> bool:
     Devuelve:
         True si la cadena es una palabra válida, False en otro caso
     '''
-    # TODO: Implementa esta función
+    for char in cadena:
+        if not char.isalpha():
+            return False
+    if len(cadena)!=5:
+        return False
     return True
 
 def calcula_minutos_y_segundos(inicio: datetime, fin: datetime) -> tuple:
@@ -25,15 +29,40 @@ def calcula_minutos_y_segundos(inicio: datetime, fin: datetime) -> tuple:
     Devuelve:
         Una tupla (minutos, segundos) con la diferencia entre los dos datetime
     """
-    # TODO: Implementa esta función
-    pass
+    tiempo = fin-inicio
+    min = (tiempo.seconds)//60
+    seg = (tiempo.seconds)%60
+    return min, seg
 
-# TODO: Escribe la cabecera completa e implementa la función quitar_letra
+def quitar_letra(cadena:str,caracter:str)->str:
+    for char in cadena:
+        if char == caracter:
+            cadena = cadena.replace(char,"",1)
+            return cadena
+    return cadena
 
-# TODO: Escribe la cabecera completa e implementa la función marcar_verdes
+def marcar_verdes(cadena:str, intento:str):
+    verdes = "" 
+    restantes = ""
+    for c in range (0, len(cadena)):
+        if cadena[c] == intento[c]:
+            verdes +="V"
+        else:
+            verdes += "_"
+            restantes += cadena[c]
+    return verdes,restantes
 
-# TODO: Escribe la cabecera completa e implementa la función marcar_amarillos
 
+def marcar_amarillos(intento,verdes,restantes):
+    colores = ""
+    for c in range ( 0, len(intento)):
+        if verdes[c] == "V":
+            colores += "V"
+        elif intento[c] in restantes:
+            colores += "A"
+        else:
+            colores += "_"
+    return colores
 def obtener_pistas(palabra_secreta: str, intento: str) -> str:
     """
     Devuelve la cadena de pistas para un intento dado.
@@ -43,7 +72,10 @@ def obtener_pistas(palabra_secreta: str, intento: str) -> str:
     Devuelve:
         Una cadena de 5 caracteres con 'V', 'A' y '_'
     """
-    # TODO: Implementa esta función
-    return "_____"  # Elimina esta línea cuando la implementes
+    verdes, restantes = marcar_verdes(palabra_secreta,intento)
+
+    colores = marcar_amarillos(intento, verdes, restantes)
+    
+    return colores # Elimina esta línea cuando la implementes
 
 
